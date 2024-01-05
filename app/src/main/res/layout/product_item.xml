@@ -40,7 +40,7 @@
   />
 
   <TextView
-          android:id="@+id/tv_product_desc"
+          android:id="@+id/tv_product_place"
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
           app:layout_constraintTop_toBottomOf="@id/tv_product_title"
@@ -55,8 +55,8 @@
           android:id="@+id/tv_product_price"
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
-          app:layout_constraintTop_toBottomOf="@id/tv_product_desc"
-          app:layout_constraintStart_toStartOf="@id/tv_product_desc"
+          app:layout_constraintTop_toBottomOf="@id/tv_product_place"
+          app:layout_constraintStart_toStartOf="@id/tv_product_place"
           android:layout_marginTop="8dp"
           android:text="PRICE"
           android:textSize="24dp"

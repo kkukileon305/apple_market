@@ -8,8 +8,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.goodness.applemarket.databinding.ProductItemBinding
 
 class ProductAdapter(
-	val mItems: List<Product>,
-	val context: Context
+	private val mItems: List<Product>,
+	private val context: Context
 ) : RecyclerView.Adapter<ProductAdapter.Holder>() {
 
 	override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): Holder {
@@ -29,13 +29,14 @@ class ProductAdapter(
 					intent.putExtra(IntentKey.PRICE.key, price)
 					intent.putExtra(IntentKey.TOTALLIKES.key, totalLikes)
 					intent.putExtra(IntentKey.TOTALCOMMENTS.key, totalComments)
+					intent.putExtra(IntentKey.PLACE.key, place)
 				}
 
 				context.startActivity(intent)
 			}
 
 			tvProductTitle.text = mItems[position].title
-			tvProductDesc.text = mItems[position].desc
+			tvProductPlace.text = mItems[position].place
 			tvProductPrice.text = mItems[position].price.toString()
 			ivProductImage.setImageResource(mItems[position].image)
 		}

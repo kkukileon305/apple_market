@@ -23,7 +23,8 @@ class MainActivity : AppCompatActivity() {
 				image = R.drawable.ic_launcher_background,
 				price = 20000,
 				totalComments = 20,
-				totalLikes = 290
+				totalLikes = 290,
+				place = "ㅁㅁ동"
 			),
 			Product(
 				title = "제목2",
@@ -31,7 +32,8 @@ class MainActivity : AppCompatActivity() {
 				image = R.drawable.ic_launcher_background,
 				price = 40000,
 				totalComments = 20,
-				totalLikes = 290
+				totalLikes = 290,
+				place = "ㅁㅁ동"
 			),
 			Product(
 				title = "제목3",
@@ -39,7 +41,8 @@ class MainActivity : AppCompatActivity() {
 				image = R.drawable.ic_launcher_background,
 				price = 30000,
 				totalComments = 20,
-				totalLikes = 290
+				totalLikes = 290,
+				place = "ㅁㅁ동"
 			),
 			Product(
 				title = "제목3",
@@ -47,7 +50,8 @@ class MainActivity : AppCompatActivity() {
 				image = R.drawable.ic_launcher_background,
 				price = 30000,
 				totalComments = 20,
-				totalLikes = 290
+				totalLikes = 290,
+				place = "ㅁㅁ동"
 			),
 			Product(
 				title = "제목3",
@@ -55,7 +59,8 @@ class MainActivity : AppCompatActivity() {
 				image = R.drawable.ic_launcher_background,
 				price = 30000,
 				totalComments = 20,
-				totalLikes = 290
+				totalLikes = 290,
+				place = "ㅁㅁ동"
 			),
 			Product(
 				title = "제목3",
@@ -63,7 +68,8 @@ class MainActivity : AppCompatActivity() {
 				image = R.drawable.ic_launcher_background,
 				price = 30000,
 				totalComments = 20,
-				totalLikes = 290
+				totalLikes = 290,
+				place = "ㅁㅁ동"
 			)
 		)
 

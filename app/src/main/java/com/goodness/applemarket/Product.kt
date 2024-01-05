@@ -6,5 +6,6 @@ data class Product(
 	val desc: String,
 	val price: Int,
 	val totalComments: Int,
-	val totalLikes: Int
+	val totalLikes: Int,
+	val place: String
 )
