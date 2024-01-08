@@ -6,6 +6,8 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.goodness.applemarket.databinding.ProductItemBinding
+import java.text.NumberFormat
+import java.util.Locale
 
 class ProductAdapter(
 	private val mItems: List<Product>,
@@ -20,24 +22,19 @@ class ProductAdapter(
 	override fun onBindViewHolder(holder: Holder, position: Int) {
 		holder.binding.apply {
 			root.setOnClickListener {
+				// navigate to product detail
 				val intent = Intent(context, ProductDetail::class.java)
-
-				mItems[position].apply {
-					intent.putExtra(IntentKey.TITLE.key, title)
-					intent.putExtra(IntentKey.DESC.key, desc)
-					intent.putExtra(IntentKey.IMAGE.key, image)
-					intent.putExtra(IntentKey.PRICE.key, price)
-					intent.putExtra(IntentKey.TOTALLIKES.key, totalLikes)
-					intent.putExtra(IntentKey.TOTALCOMMENTS.key, totalComments)
-					intent.putExtra(IntentKey.PLACE.key, place)
-				}
+				intent.putExtra("Product", mItems[position])
 
 				context.startActivity(intent)
 			}
 
+			// binding data
 			tvProductTitle.text = mItems[position].title
 			tvProductPlace.text = mItems[position].place
-			tvProductPrice.text = mItems[position].price.toString()
+			tvProductPrice.text = "${NumberFormat.getNumberInstance(Locale.KOREA).format(mItems[position].price)}원"
+			tvProductTotalLikes.text = mItems[position].totalLikes.toString()
+			tvProductTotalComments.text = mItems[position].totalComments.toString()
 			ivProductImage.setImageResource(mItems[position].image)
 		}
 	}

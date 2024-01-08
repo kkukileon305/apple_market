@@ -11,8 +11,8 @@ class ProductDetail : AppCompatActivity() {
 		super.onCreate(savedInstanceState)
 		setContentView(binding.root)
 
-		intent.getStringExtra(IntentKey.TITLE.key)?.let {
-			binding.tvProductTitle.text = it
+		intent.getParcelableExtra<Product>("Product")?.let {
+			binding.tvProductTitle.text = it.title
 		}
 	}
 }
