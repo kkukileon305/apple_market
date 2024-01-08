@@ -1,52 +1,45 @@
 package com.goodness.applemarket
 
+import android.Manifest
+import android.app.Notification
+import android.app.NotificationChannel
+import android.app.NotificationManager
+import android.content.Context
 import android.content.DialogInterface
+import android.content.pm.PackageManager
+import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import androidx.activity.OnBackPressedCallback
 import androidx.activity.addCallback
 import androidx.appcompat.app.AlertDialog
+import androidx.core.app.ActivityCompat
+import androidx.core.app.NotificationCompat
+import androidx.core.app.NotificationManagerCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.goodness.applemarket.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
 	private val binding by lazy { ActivityMainBinding.inflate(layoutInflater) }
 
+	private val myNotificationID = 1
+	private val channelID = "default"
+
 	override fun onCreate(savedInstanceState: Bundle?) {
 		super.onCreate(savedInstanceState)
 		setContentView(binding.root)
 
 		setRV()
-		setBackHandle()
-	}
-
-	private fun setBackHandle() {
-		onBackPressedDispatcher.addCallback(this) {
-			val builder = AlertDialog.Builder(this@MainActivity)
-			builder.setTitle("종료")
-			builder.setMessage("정말 종료하시겠습니까?")
-			builder.setIcon(R.drawable.chat)
-
-			val listener = DialogInterface.OnClickListener { p0, p1 ->
-				when (p1) {
-					DialogInterface.BUTTON_POSITIVE -> finish()
-				}
-			}
-
-			builder.setPositiveButton("확인", listener)
-			builder.setNegativeButton("취소", listener)
-
-			builder.show()
-		}
+		setBackPressedHandle()
+		setNotification()
 	}
 
 	private fun setRV() {
 		val datas = listOf(
 			Product(
-				title = "산진 한달된 선풍기 팝니다",
+				title = "산진 한달된 지구 팝니다.",
 				desc = "이사가서 필요가 없어졌어요 급하게 내놓습니다",
 				image = R.drawable.sample1,
-				price = 20000,
+				price = 2000000000,
 				seller = "안마담",
 				totalComments = 20,
 				totalLikes = 12,
@@ -144,8 +137,62 @@ class MainActivity : AppCompatActivity() {
 			)
 		)
 
-
 		binding.rvProducts.adapter = ProductAdapter(datas, this)
 		binding.rvProducts.layoutManager = LinearLayoutManager(this)
+	}
+
+	private fun setBackPressedHandle() {
+		onBackPressedDispatcher.addCallback(this) {
+			val builder = AlertDialog.Builder(this@MainActivity)
+
+			builder.apply {
+				setTitle("종료")
+				setMessage("정말 종료하시겠습니까?")
+				setIcon(R.drawable.chat)
+			}
+
+			val listener = DialogInterface.OnClickListener { p0, p1 ->
+				when (p1) {
+					DialogInterface.BUTTON_POSITIVE -> finish()
+				}
+			}
+
+			builder.setPositiveButton("확인", listener)
+			builder.setNegativeButton("취소", listener)
+
+			builder.show()
+		}
+	}
+
+	private fun setNotification() {
+		val builder = NotificationCompat.Builder(this, channelID)
+
+		builder.apply {
+			setSmallIcon(R.mipmap.ic_launcher)
+			setContentTitle("키워드 알림")
+			setContentText("설정한 키워드에 대한 알림이 도착함...")
+			priority = NotificationManager.IMPORTANCE_DEFAULT
+		}
+
+		if (ActivityCompat.checkSelfPermission(
+				this,
+				Manifest.permission.POST_NOTIFICATIONS
+			) != PackageManager.PERMISSION_GRANTED
+		) {
+			// 알림 권한 거부
+			return
+		}
+		NotificationManagerCompat.from(this).notify(myNotificationID, builder.build())
+	}
+
+	private fun createNotificationChannel() {
+		// Android 8.0
+		val channel = NotificationChannel(
+			channelID, "default channel",
+			NotificationManager.IMPORTANCE_DEFAULT
+		)
+		channel.description = "description text of this channel."
+		val notificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+		notificationManager.createNotificationChannel(channel)
 	}
 }
