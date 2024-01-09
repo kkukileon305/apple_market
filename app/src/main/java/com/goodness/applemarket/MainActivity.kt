@@ -10,6 +10,7 @@ import android.content.pm.PackageManager
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.addCallback
 import androidx.appcompat.app.AlertDialog
 import androidx.core.app.ActivityCompat
@@ -30,7 +31,7 @@ class MainActivity : AppCompatActivity() {
 
 		setRV()
 		setBackPressedHandle()
-		setNotification()
+		setBellClickHandle()
 	}
 
 	private fun setRV() {
@@ -143,56 +144,65 @@ class MainActivity : AppCompatActivity() {
 
 	private fun setBackPressedHandle() {
 		onBackPressedDispatcher.addCallback(this) {
-			val builder = AlertDialog.Builder(this@MainActivity)
-
-			builder.apply {
-				setTitle("종료")
-				setMessage("정말 종료하시겠습니까?")
-				setIcon(R.drawable.chat)
-			}
-
-			val listener = DialogInterface.OnClickListener { p0, p1 ->
-				when (p1) {
+			showDialog("종료", "정말 종료하시겠습니까?") { _, which ->
+				when (which) {
 					DialogInterface.BUTTON_POSITIVE -> finish()
 				}
 			}
-
-			builder.setPositiveButton("확인", listener)
-			builder.setNegativeButton("취소", listener)
-
-			builder.show()
 		}
 	}
 
-	private fun setNotification() {
-		val builder = NotificationCompat.Builder(this, channelID)
+	private fun setBellClickHandle() {
+		binding.ivNotification.setOnClickListener {
+			val builder = NotificationCompat.Builder(this, channelID)
 
-		builder.apply {
-			setSmallIcon(R.mipmap.ic_launcher)
-			setContentTitle("키워드 알림")
-			setContentText("설정한 키워드에 대한 알림이 도착함...")
-			priority = NotificationManager.IMPORTANCE_DEFAULT
-		}
+			builder.apply {
+				setSmallIcon(R.mipmap.ic_launcher)
+				setContentTitle("키워드 알림")
+				setContentText("설정한 키워드에 대한 알림이 도착함...")
+				priority = NotificationManager.IMPORTANCE_DEFAULT
+			}
 
-		if (ActivityCompat.checkSelfPermission(
-				this,
-				Manifest.permission.POST_NOTIFICATIONS
-			) != PackageManager.PERMISSION_GRANTED
-		) {
-			// 알림 권한 거부
-			return
+			createNotificationChannel()
+			if (ActivityCompat.checkSelfPermission(
+					this,
+					Manifest.permission.POST_NOTIFICATIONS
+				) != PackageManager.PERMISSION_GRANTED
+			) {
+				// 알림 권한 거부
+				showDialog("알림", "알림 권한을 허용해주세요.")
+			} else {
+				NotificationManagerCompat.from(this).notify(myNotificationID, builder.build())
+			}
 		}
-		NotificationManagerCompat.from(this).notify(myNotificationID, builder.build())
 	}
 
 	private fun createNotificationChannel() {
-		// Android 8.0
 		val channel = NotificationChannel(
-			channelID, "default channel",
+			channelID, "default",
 			NotificationManager.IMPORTANCE_DEFAULT
 		)
 		channel.description = "description text of this channel."
 		val notificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
 		notificationManager.createNotificationChannel(channel)
+	}
+
+	private fun showDialog(title: String, message: String, onClickListener: DialogInterface.OnClickListener? = null) {
+		val builder = AlertDialog.Builder(this@MainActivity)
+
+		builder.apply {
+			setTitle(title)
+			setMessage(message)
+			setIcon(R.drawable.chat)
+		}
+
+		if (onClickListener != null) {
+			builder.setPositiveButton("확인", onClickListener)
+			builder.setNegativeButton("취소", onClickListener)
+		} else {
+			builder.setPositiveButton("확인") { dialog, _ -> dialog.dismiss() }
+		}
+
+		builder.show()
 	}
 }
