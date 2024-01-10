@@ -33,7 +33,7 @@
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintLeft_toLeftOf="parent"
                 android:layout_margin="12dp"
-                android:src="@drawable/chat"
+                android:src="@drawable/left_arrow"
                 android:translationZ="1dp"
         />
 
@@ -86,6 +86,7 @@
                 app:layout_constraintTop_toTopOf="parent"
                 android:layout_marginStart="12dp"
         />
+
         <TextView
                 android:id="@+id/tv_product_place"
                 android:layout_width="wrap_content"
@@ -95,6 +96,37 @@
                 app:layout_constraintTop_toBottomOf="@id/tv_product_seller"
                 android:layout_marginTop="8dp"
                 android:layout_marginStart="12dp"
+        />
+
+        <ImageView
+                android:id="@+id/iv_smile"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                android:src="@drawable/smile"
+        />
+
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintEnd_toStartOf="@id/iv_smile"
+                app:layout_constraintTop_toTopOf="@id/iv_smile"
+                app:layout_constraintBottom_toBottomOf="@id/iv_smile"
+                android:layout_marginEnd="12dp"
+                android:text="39.3"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:textColor="#2355C1"
+        />
+
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:text="@string/thermal"
+                android:textColor="#aaaaaa"
         />
       </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -160,11 +192,22 @@
             app:layout_constraintStart_toStartOf="parent"
     />
 
+    <View
+            android:id="@+id/v_line"
+            android:layout_width="1dp"
+            android:layout_height="0dp"
+            app:layout_constraintStart_toEndOf="@id/iv_likes"
+            app:layout_constraintTop_toTopOf="@id/iv_likes"
+            app:layout_constraintBottom_toBottomOf="@id/iv_likes"
+            android:layout_marginStart="12dp"
+            android:background="#aaaaaa"
+    />
+
     <TextView
             android:id="@+id/tv_product_price"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_constraintStart_toEndOf="@id/iv_likes"
+            app:layout_constraintStart_toEndOf="@id/v_line"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
             android:layout_marginStart="12dp"
@@ -172,6 +215,29 @@
             android:textSize="28sp"
             android:textStyle="bold"
     />
+
+    <androidx.cardview.widget.CardView
+            android:layout_width="80dp"
+            android:layout_height="0dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:backgroundTint="#FF6A00"
+            app:cardCornerRadius="12dp"
+    >
+
+      <TextView
+              android:id="@+id/tv_product_chat"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:gravity="center"
+              android:text="Good"
+              android:textSize="20sp"
+              android:textStyle="bold"
+              android:textColor="#ffffff"
+      />
+
+    </androidx.cardview.widget.CardView>
 
   </androidx.constraintlayout.widget.ConstraintLayout>
 
